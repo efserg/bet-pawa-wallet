@@ -24,7 +24,7 @@
 *.iws
 *.iml
 *.ipr
-/out/
+out/
 
 # Gradle
 gradle/
