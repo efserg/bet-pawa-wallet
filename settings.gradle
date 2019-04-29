@@ -1,6 +1,7 @@
-pluginManagement {
-    repositories {
-        gradlePluginPortal()
-    }
-}
-rootProject.name = 'wallet-server'
+rootProject.name = 'bet-pawa-wallet'
+
+include "grpc-lib"
+
+include "wallet-client"
+include "wallet-server"
+

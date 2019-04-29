@@ -1,23 +1,57 @@
-plugins {
-    id 'org.springframework.boot' version '2.1.4.RELEASE'
-    id 'java'
+buildscript {
+    repositories {
+        mavenLocal()
+        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
+        maven{ url 'http://maven.aliyun.com/nexus/content/repositories/jcenter'}
+        mavenCentral()
+        jcenter()
+        maven { url 'http://repo.spring.io/plugins-release' }
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+    ext {
+        springBootVersion = '2.0.6.RELEASE'
+        springBootGrpcVersion = '2.2.0.RELEASE'
+        springCloudVersion = 'Finchley.SR2'
+        grpcVersion = '1.17.1'
+        protobufVersion = '3.6.1'
+        protobufGradlePluginVersion = '0.8.7'
+        braveInstrumentationGrpc='5.6.0'
+    }
+    dependencies {
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.6.RELEASE"
+        classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
+    }
 }
 
-apply plugin: 'io.spring.dependency-management'
-
-group = 'su.efremov'
-version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '1.8'
-
-repositories {
-    mavenCentral()
+wrapper {
+    gradleVersion = '5.0'
 }
 
-dependencies {
-    implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
-    implementation 'org.springframework.boot:spring-boot-starter-security'
-    implementation 'org.liquibase:liquibase-core'
-    runtimeOnly 'mysql:mysql-connector-java'
-    testImplementation 'org.springframework.boot:spring-boot-starter-test'
-    testImplementation 'org.springframework.security:spring-security-test'
+subprojects {
+    apply plugin: 'java'
+    apply plugin: 'idea'
+    apply plugin: "io.spring.dependency-management"
+
+    compileJava {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
+        options.encoding = 'UTF-8'
+    }
+
+    repositories {
+        mavenLocal()
+        mavenCentral()
+        jcenter()
+        maven { url 'http://repo.spring.io/plugins-release' }
+        maven { url "https://plugins.gradle.org/m2/" }
+    }
+    buildscript {
+        repositories {
+            mavenLocal()
+            mavenCentral()
+            jcenter()
+            maven { url 'http://repo.spring.io/plugins-release' }
+            maven { url "https://plugins.gradle.org/m2/" }
+        }
+    }
 }

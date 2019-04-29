@@ -1,4 +1,4 @@
-package su.efremov.walletserver;
+package su.efremov.wallet;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
