@@ -1,24 +1,20 @@
 buildscript {
     repositories {
         mavenLocal()
-        maven { url 'http://maven.aliyun.com/nexus/content/groups/public/' }
-        maven{ url 'http://maven.aliyun.com/nexus/content/repositories/jcenter'}
         mavenCentral()
         jcenter()
         maven { url 'http://repo.spring.io/plugins-release' }
         maven { url "https://plugins.gradle.org/m2/" }
     }
     ext {
-        springBootVersion = '2.0.6.RELEASE'
-        springBootGrpcVersion = '2.2.0.RELEASE'
-        springCloudVersion = 'Finchley.SR2'
-        grpcVersion = '1.17.1'
-        protobufVersion = '3.6.1'
-        protobufGradlePluginVersion = '0.8.7'
-        braveInstrumentationGrpc='5.6.0'
+        springBootVersion = '2.1.4.RELEASE'
+        springBootGrpcVersion = '2.3.0.RELEASE'
+        grpcVersion = '1.20.0'
+        protobufVersion = '3.7.1'
+        protobufGradlePluginVersion = '0.8.8'
     }
     dependencies {
-        classpath "io.spring.gradle:dependency-management-plugin:1.0.6.RELEASE"
+        classpath "io.spring.gradle:dependency-management-plugin:1.0.7.RELEASE"
         classpath "org.springframework.boot:spring-boot-gradle-plugin:${springBootVersion}"
     }
 }
