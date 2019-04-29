@@ -9,7 +9,7 @@ buildscript {
     ext {
         springBootVersion = '2.1.4.RELEASE'
         springBootGrpcVersion = '2.3.0.RELEASE'
-        grpcVersion = '1.20.0'
+        grpcVersion = '1.18.0'
         protobufVersion = '3.7.1'
         protobufGradlePluginVersion = '0.8.8'
     }
