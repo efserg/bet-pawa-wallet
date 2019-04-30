@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+option java_multiple_files = true;
+option java_package = "su.efremov.bet.pawa.deposit";
+option java_outer_classname = "CurrencyProto";
+
+enum Currency {
+    EUR = 0;
+    USD = 1;
+    GBR = 2;
+};

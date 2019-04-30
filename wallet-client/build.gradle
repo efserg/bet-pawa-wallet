@@ -1,6 +1,7 @@
 apply plugin: 'org.springframework.boot'
 
 dependencies {
+    compile group: 'org.projectlombok', name: 'lombok', version: '1.18.6'
     compile('org.springframework.boot:spring-boot-starter-web')
     compile("net.devh:grpc-client-spring-boot-starter:${springBootGrpcVersion}")
     compile project(':grpc-lib')
