@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 import su.efremov.bet.pawa.deposit.AddFundsRequest;
+import su.efremov.bet.pawa.deposit.Currency;
 import su.efremov.wallet.controller.request.AddFundsRestRequest;
 import su.efremov.wallet.service.DepositClientService;
 
@@ -19,11 +20,11 @@ public class DepositController {
 
     @PostMapping("add")
     @ResponseStatus(HttpStatus.OK)
-    public void printMessage(@RequestBody AddFundsRestRequest request) {
+    public void addFunds(@RequestBody AddFundsRestRequest request) {
         depositClientService.addFunds(AddFundsRequest.newBuilder()
             .setUserId(request.getUserId())
-            .setCurrency(AddFundsRequest.Currency.valueOf(request.getCurrency().name()))
-            .setAmount(request.getAmount().floatValue())
+            .setCurrency(Currency.valueOf(request.getCurrency().name()))
+            .setAmount(request.getAmount().toString())
             .build());
     }
 }

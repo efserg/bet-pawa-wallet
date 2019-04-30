@@ -1,0 +1,28 @@
+syntax = "proto3";
+
+import "currency.proto";
+
+option java_multiple_files = true;
+option java_package = "su.efremov.bet.pawa.balance";
+option java_outer_classname = "BalanceProto";
+
+package balance;
+
+// Get the users current balance.
+service Balance {
+    rpc balance(BalanceRequest) returns (BalanceResponse) {
+    }
+}
+
+message BalanceRequest {
+    int64 user_id = 1;
+}
+
+message CurrencyBalance {
+    Currency currency = 1;
+    string amount = 2;
+}
+
+message BalanceResponse {
+    repeated CurrencyBalance balance = 1;
+}

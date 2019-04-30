@@ -2,6 +2,7 @@ package su.efremov.wallet.controller.request;
 
 import java.math.BigDecimal;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
 import javax.validation.constraints.PositiveOrZero;
 
 import lombok.AllArgsConstructor;
@@ -15,7 +16,7 @@ import lombok.NoArgsConstructor;
 @Data
 public class AddFundsRestRequest {
 
-    @PositiveOrZero
+    @Positive
     @NotNull
     private Long userId;
 
@@ -23,6 +24,7 @@ public class AddFundsRestRequest {
     @NotNull
     private BigDecimal amount;
 
+    @NotNull
     private CurrencyEnum currency;
 
 }

@@ -11,12 +11,12 @@ package deposit;
 
 // Deposit funds to the users wallet.
 service Deposit {
-    rpc AddFunds (AddFundsRequest) returns (google.protobuf.Empty) {
+    rpc AddFunds(AddFundsRequest) returns (google.protobuf.Empty) {
     }
 }
 
 message AddFundsRequest {
     int64 user_id = 1;
-    float amount = 2;
+    string amount = 2;
     Currency currency = 3;
 }
