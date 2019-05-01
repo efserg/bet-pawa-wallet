@@ -6,8 +6,10 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -28,6 +30,7 @@ import su.efremov.wallet.service.WithdrawClientService;
 
 @RestController
 @AllArgsConstructor
+@Slf4j
 public class WalletController {
 
     private final DepositClientService depositService;
@@ -39,6 +42,7 @@ public class WalletController {
     @PostMapping("addFunds/{userId}")
     @ResponseStatus(HttpStatus.OK)
     public void addFunds(@PathVariable Long userId, @RequestBody AddFundsRestRequest request) {
+        log.info("Add funds {} {} for user id = {}", request.getAmount(), request.getCurrency(), userId);
         depositService.addFunds(AddFundsRequest.newBuilder()
             .setUserId(userId)
             .setCurrency(Currency.valueOf(request.getCurrency().name()))
@@ -49,6 +53,7 @@ public class WalletController {
     @PostMapping("withdraw/{userId}")
     @ResponseStatus(HttpStatus.OK)
     public void withdraw(@PathVariable Long userId, @RequestBody WithdrawRestRequest request) {
+        log.info("Withdraw {} {} for user id = {}", request.getAmount(), request.getCurrency(), userId);
         withdrawService.withdraw(WithdrawRequest.newBuilder()
             .setUserId(userId)
             .setCurrency(Currency.valueOf(request.getCurrency().name()))
@@ -56,8 +61,9 @@ public class WalletController {
             .build());
     }
 
-    @PostMapping("balance/{userId}")
+    @GetMapping("balance/{userId}")
     public ResponseEntity<BalanceRestResponse> addFunds(@PathVariable Long userId) {
+        log.info("Get balance for user id = {}", userId);
         List<BalanceRestResponse.CurrencyBalance> balances = balanceService.balance(BalanceRequest.newBuilder()
             .setUserId(userId)
             .build()).getBalanceList().stream()
