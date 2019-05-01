@@ -10,7 +10,7 @@ option java_outer_classname = "WithdrawProto";
 package withdraw;
 
 // Withdraw funds from the user wallet.
-service Deposit {
+service Withdraw {
     rpc withdraw (WithdrawRequest) returns (google.protobuf.Empty) {
     }
 }

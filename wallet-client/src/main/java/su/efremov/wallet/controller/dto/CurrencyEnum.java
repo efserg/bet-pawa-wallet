@@ -1,4 +1,4 @@
-package su.efremov.wallet.controller.request;
+package su.efremov.wallet.controller.dto;
 
 public enum CurrencyEnum {
     EUR, USD, GBR
