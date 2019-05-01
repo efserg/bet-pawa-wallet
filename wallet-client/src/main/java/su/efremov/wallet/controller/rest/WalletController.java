@@ -2,6 +2,7 @@ package su.efremov.wallet.controller.rest;
 
 import static java.util.stream.Collectors.toList;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import lombok.AllArgsConstructor;
@@ -61,7 +62,7 @@ public class WalletController {
             .setUserId(userId)
             .build()).getBalanceList().stream()
             .map(balance -> BalanceRestResponse.CurrencyBalance.builder()
-//                .amount(BigDecimal.valueOf(balance.getAmount())) // todo: new gRPC type Money
+                .amount(new BigDecimal(balance.getAmount()))
                 .currency(CurrencyEnum.valueOf(balance.getCurrency().name()))
                 .build())
             .collect(toList());
