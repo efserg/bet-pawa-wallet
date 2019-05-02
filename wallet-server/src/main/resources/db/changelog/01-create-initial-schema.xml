@@ -1,5 +1,8 @@
 <?xml version="1.1" encoding="UTF-8" standalone="no"?>
-<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+                   xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+                   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+                   xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
     <changeSet author="efserg" id="create-transaction-table">
         <createTable tableName="transaction">
             <column name="id" type="BIGINT">
@@ -35,10 +38,19 @@
         </createIndex>
     </changeSet>
     <changeSet author="efserg" id="create-fk-transaction-user-id-constraint">
-        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="transaction" constraintName="fk_transaction_user" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="user" validate="true"/>
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="transaction"
+                                 constraintName="fk_transaction_user" deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id"
+                                 referencedTableName="user" validate="true"/>
     </changeSet>
     <changeSet author="efserg" id="add-autoincrement-for-transaction-id">
-        <addAutoIncrement columnDataType="BIGINT" columnName="id" incrementBy="1" startWith="100" tableName="transaction"/>
+        <addAutoIncrement columnDataType="BIGINT" columnName="id" incrementBy="1" startWith="100"
+                          tableName="transaction"/>
+    </changeSet>
+    <changeSet author="efserg" id="create-balance-view">
+        <createView replaceIfExists="true" viewName="balance">
+            SELECT user_id, currency, SUM(amount) FROM transaction GROUP BY user_id, currency
+        </createView>
     </changeSet>
 
 </databaseChangeLog>
