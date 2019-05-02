@@ -1,0 +1,44 @@
+<?xml version="1.1" encoding="UTF-8" standalone="no"?>
+<databaseChangeLog xmlns="http://www.liquibase.org/xml/ns/dbchangelog" xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.6.xsd">
+    <changeSet author="efserg" id="create-transaction-table">
+        <createTable tableName="transaction">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="date" type="datetime">
+                <constraints nullable="false"/>
+            </column>
+            <column name="currency" type="VARCHAR(3)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="amount" type="DECIMAL(10)">
+                <constraints nullable="false"/>
+            </column>
+            <column name="user_id" type="BIGINT">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
+    <changeSet author="efserg" id="create-user-table">
+        <createTable tableName="user">
+            <column name="id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="username" type="VARCHAR(45)"/>
+            <column name="email" type="VARCHAR(45)"/>
+            <column name="password" type="VARCHAR(1024)"/>
+        </createTable>
+    </changeSet>
+    <changeSet author="efserg" id="create-fk-transaction-user-id-index">
+        <createIndex indexName="fk_transaction_user_idx" tableName="transaction">
+            <column name="user_id"/>
+        </createIndex>
+    </changeSet>
+    <changeSet author="efserg" id="create-fk-transaction-user-id-constraint">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="transaction" constraintName="fk_transaction_user" deferrable="false" initiallyDeferred="false" onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id" referencedTableName="user" validate="true"/>
+    </changeSet>
+    <changeSet author="efserg" id="add-autoincrement-for-transaction-id">
+        <addAutoIncrement columnDataType="BIGINT" columnName="id" incrementBy="1" startWith="100" tableName="transaction"/>
+    </changeSet>
+
+</databaseChangeLog>
