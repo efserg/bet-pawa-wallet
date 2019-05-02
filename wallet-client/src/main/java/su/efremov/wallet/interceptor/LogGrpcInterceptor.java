@@ -1,4 +1,4 @@
-package su.efremov.wallet.client;
+package su.efremov.wallet.interceptor;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
