@@ -10,7 +10,7 @@ public enum CurrencyEnum {
         try {
             return CurrencyEnum.valueOf(currency.name());
         } catch (IllegalArgumentException ex) {
-            throw new UnknownCurrencyException();
+            throw new UnknownCurrencyException("Unknown currency: " + currency.name());
         }
     }
 }

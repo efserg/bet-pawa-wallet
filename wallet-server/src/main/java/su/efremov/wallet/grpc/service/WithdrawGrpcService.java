@@ -7,10 +7,12 @@ import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
 import lombok.AllArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 import net.devh.boot.grpc.server.service.GrpcService;
 import com.google.protobuf.Empty;
 
+import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import su.efremov.bet.pawa.withdraw.WithdrawGrpc;
 import su.efremov.bet.pawa.withdraw.WithdrawRequest;
@@ -19,13 +21,19 @@ import su.efremov.wallet.domain.CurrencyEnum;
 import su.efremov.wallet.domain.Transaction;
 import su.efremov.wallet.domain.User;
 import su.efremov.wallet.exception.InsufficientFundsException;
+import su.efremov.wallet.exception.UnknownCurrencyException;
 import su.efremov.wallet.repository.BalanceRepository;
 import su.efremov.wallet.repository.TransactionRepository;
 import su.efremov.wallet.repository.UserRepository;
 
 @GrpcService
 @AllArgsConstructor
+@Slf4j
 public class WithdrawGrpcService extends WithdrawGrpc.WithdrawImplBase {
+
+    private static final String INSUFFICIENT_FUNDS_ERROR_MSG = "User (id = %d) has attempted to withdraw %s%s, but has only %s%s on the account";
+
+    private static final String USER_NOT_FOUND_ERROR_MSG = "User id = %d not found";
 
     private final UserRepository userRepository;
 
@@ -43,14 +51,15 @@ public class WithdrawGrpcService extends WithdrawGrpc.WithdrawImplBase {
             final CurrencyEnum currency = fromGrpc(request.getCurrency());
 
             final User user = userRepository.findById(userId)
-                .orElseThrow(InsufficientFundsException::new);
+                .orElseThrow(() -> new InsufficientFundsException(String.format(USER_NOT_FOUND_ERROR_MSG, userId)));
 
             final BigDecimal currentAmount = balanceRepository.findByIdUserIdAndIdCurrency(userId, currency)
                 .map(Balance::getAmount)
                 .orElse(BigDecimal.ZERO);
 
             if (currentAmount.compareTo(amount) < 0) {
-                throw new InsufficientFundsException();
+                String msg = String.format(INSUFFICIENT_FUNDS_ERROR_MSG, userId, amount.toString(), currency, currentAmount.toString(), currency);
+                throw new InsufficientFundsException(msg);
             }
 
             transactionRepository.save(Transaction.builder()
@@ -61,8 +70,25 @@ public class WithdrawGrpcService extends WithdrawGrpc.WithdrawImplBase {
                 .build());
             responseObserver.onNext(Empty.newBuilder().build());
             responseObserver.onCompleted();
+        } catch (UnknownCurrencyException ex) {
+            responseObserver.onError(Status.FAILED_PRECONDITION
+                .augmentDescription("Unknown currency")
+                .withDescription(ex.getMessage())
+                .withCause(ex)
+                .asRuntimeException());
+        } catch (InsufficientFundsException ex) {
+            responseObserver.onError(Status.UNAVAILABLE
+                .augmentDescription("Insufficient funds")
+                .withDescription(ex.getMessage())
+                .withCause(ex)
+                .asRuntimeException());
         } catch (Exception ex) {
-            responseObserver.onError(ex);
+            log.error("Error during wallet withdraw", ex);
+            responseObserver.onError(Status.INTERNAL
+                .withDescription(ex.getMessage())
+                .augmentDescription("Unknown error")
+                .withCause(ex)
+                .asRuntimeException());
         }
     }
 
