@@ -62,7 +62,7 @@ public class WalletController {
     }
 
     @GetMapping("balance/{userId}")
-    public ResponseEntity<BalanceRestResponse> addFunds(@PathVariable Long userId) {
+    public ResponseEntity<BalanceRestResponse> balance(@PathVariable Long userId) {
         log.info("Get balance for user id = {}", userId);
         List<BalanceRestResponse.CurrencyBalance> balances = balanceService.balance(BalanceRequest.newBuilder()
             .setUserId(userId)

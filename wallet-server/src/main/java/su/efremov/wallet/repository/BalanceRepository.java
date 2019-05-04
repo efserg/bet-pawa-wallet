@@ -8,13 +8,14 @@ import org.springframework.stereotype.Repository;
 
 import su.efremov.bet.pawa.deposit.Currency;
 import su.efremov.wallet.domain.Balance;
+import su.efremov.wallet.domain.BalanceId;
 import su.efremov.wallet.domain.CurrencyEnum;
 
 @Repository
-public interface BalanceRepository extends CrudRepository<Balance, Long> {
+public interface BalanceRepository extends CrudRepository<Balance, BalanceId> {
 
-    Optional<Balance> findByUserIdAndCurrency(Long userId, CurrencyEnum currency);
+    Optional<Balance> findByIdUserIdAndIdCurrency(Long userId, CurrencyEnum currency);
 
-    List<Balance> findByUserId(Long userId);
+    List<Balance> findByIdUserId(Long userId);
 
 }

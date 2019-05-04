@@ -25,11 +25,4 @@ public class AddFundsRestRequest {
     @NotNull
     private CurrencyEnum currency;
 
-    /*
-       public void convert() {
-        byte[] bigInteger = amount.toBigInteger().toByteArray();
-        BigDecimal remainder = amount.remainder(BigDecimal.ONE);
-
-    }
-    */
 }

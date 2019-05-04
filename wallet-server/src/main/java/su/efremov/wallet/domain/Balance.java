@@ -1,28 +1,27 @@
 package su.efremov.wallet.domain;
 
 import java.math.BigDecimal;
+import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.Immutable;
 
-@Entity
+@Entity(name = "balance")
+@Immutable
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@EqualsAndHashCode(of = {"userId", "currency"})
+@EqualsAndHashCode(of = {"id"})
 public class Balance {
 
-    private Long userId;
-
-    @Enumerated(EnumType.STRING)
-    private CurrencyEnum currency;
+    @EmbeddedId
+    private BalanceId id;
 
     private BigDecimal amount;
 

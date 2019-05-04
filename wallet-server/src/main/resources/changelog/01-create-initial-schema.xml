@@ -49,7 +49,7 @@
     </changeSet>
     <changeSet author="efserg" id="create-balance-view">
         <createView replaceIfExists="true" viewName="balance">
-            SELECT user_id, currency, SUM(amount) FROM transaction GROUP BY user_id, currency
+            SELECT user_id, currency, SUM(amount) as amount FROM transaction GROUP BY user_id, currency
         </createView>
     </changeSet>
 

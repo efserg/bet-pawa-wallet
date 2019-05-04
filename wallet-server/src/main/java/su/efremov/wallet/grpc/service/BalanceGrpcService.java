@@ -21,10 +21,10 @@ public class BalanceGrpcService extends BalanceGrpc.BalanceImplBase {
 
     @Override
     public void balance(BalanceRequest request, StreamObserver<BalanceResponse> responseObserver) {
-        Iterable<CurrencyBalance> balances = balanceRepository.findByUserId(request.getUserId()).stream()
+        Iterable<CurrencyBalance> balances = balanceRepository.findByIdUserId(request.getUserId()).stream()
             .map(balance -> CurrencyBalance.newBuilder()
-                .setCurrency(Currency.valueOf(balance.getCurrency().name()))
-                .setAmount(balance.toString())
+                .setCurrency(Currency.valueOf(balance.getId().getCurrency().name()))
+                .setAmount(balance.getAmount().toString())
                 .build())
             .collect(toSet());
 
