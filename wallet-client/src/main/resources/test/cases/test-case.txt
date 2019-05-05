@@ -1,0 +1,15 @@
+withdraw 200 USD
+deposit 100 USD
+withdraw 200 USD
+deposit 100 USD
+withdraw 200 USD
+deposit 50 USD
+deposit 25 USD
+withdraw 100 USD
+withdraw 10 USD
+withdraw 20 USD
+deposit 5 USD
+deposit 5 EUR
+deposit 15 GBR
+withdraw 40 USD
+withdraw 5 GBR
