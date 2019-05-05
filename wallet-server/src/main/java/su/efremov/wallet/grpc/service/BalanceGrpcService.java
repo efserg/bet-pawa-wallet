@@ -4,6 +4,7 @@ import static java.util.stream.Collectors.toSet;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.transaction.annotation.Transactional;
 import net.devh.boot.grpc.server.service.GrpcService;
 
 import io.grpc.Status;
@@ -23,6 +24,7 @@ public class BalanceGrpcService extends BalanceGrpc.BalanceImplBase {
     private final BalanceRepository balanceRepository;
 
     @Override
+    @Transactional(readOnly = true)
     public void balance(BalanceRequest request, StreamObserver<BalanceResponse> responseObserver) {
 
         try {

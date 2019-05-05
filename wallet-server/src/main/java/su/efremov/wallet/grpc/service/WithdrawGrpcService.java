@@ -61,7 +61,6 @@ public class WithdrawGrpcService extends WithdrawGrpc.WithdrawImplBase {
                 String msg = String.format(INSUFFICIENT_FUNDS_ERROR_MSG, userId, amount.toString(), currency, currentAmount.toString(), currency);
                 throw new InsufficientFundsException(msg);
             }
-
             transactionRepository.save(Transaction.builder()
                 .date(now)
                 .user(user)

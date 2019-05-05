@@ -5,10 +5,10 @@ import static su.efremov.wallet.domain.CurrencyEnum.fromGrpc;
 
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
-import javax.transaction.Transactional;
 
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.transaction.annotation.Transactional;
 import net.devh.boot.grpc.server.service.GrpcService;
 import com.google.protobuf.Empty;
 
