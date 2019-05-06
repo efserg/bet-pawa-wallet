@@ -5,7 +5,7 @@ import static java.util.stream.Collectors.toList;
 import java.math.BigDecimal;
 import java.util.List;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -29,7 +29,7 @@ import su.efremov.wallet.service.DepositClientService;
 import su.efremov.wallet.service.WithdrawClientService;
 
 @RestController
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 public class WalletController {
 

@@ -1,4 +1,4 @@
-package su.efremov.wallet.grpc.service;
+package su.efremov.wallet.service.grpc;
 
 import static java.time.ZoneOffset.UTC;
 import static su.efremov.wallet.domain.CurrencyEnum.fromGrpc;
@@ -6,7 +6,7 @@ import static su.efremov.wallet.domain.CurrencyEnum.fromGrpc;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 import net.devh.boot.grpc.server.service.GrpcService;
@@ -24,7 +24,7 @@ import su.efremov.wallet.repository.TransactionRepository;
 import su.efremov.wallet.repository.UserRepository;
 
 @GrpcService
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 public class DepositGrpcService extends DepositGrpc.DepositImplBase {
 

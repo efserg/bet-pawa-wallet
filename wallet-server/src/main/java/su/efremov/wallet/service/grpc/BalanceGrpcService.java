@@ -1,8 +1,8 @@
-package su.efremov.wallet.grpc.service;
+package su.efremov.wallet.service.grpc;
 
 import static java.util.stream.Collectors.toSet;
 
-import lombok.AllArgsConstructor;
+import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 import net.devh.boot.grpc.server.service.GrpcService;
@@ -17,7 +17,7 @@ import su.efremov.bet.pawa.deposit.Currency;
 import su.efremov.wallet.repository.BalanceRepository;
 
 @GrpcService
-@AllArgsConstructor
+@RequiredArgsConstructor
 @Slf4j
 public class BalanceGrpcService extends BalanceGrpc.BalanceImplBase {
 
