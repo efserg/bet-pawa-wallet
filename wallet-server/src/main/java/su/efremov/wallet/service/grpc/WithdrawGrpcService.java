@@ -17,6 +17,7 @@ import io.grpc.stub.StreamObserver;
 import su.efremov.bet.pawa.withdraw.WithdrawGrpc;
 import su.efremov.bet.pawa.withdraw.WithdrawRequest;
 import su.efremov.wallet.domain.Balance;
+import su.efremov.wallet.domain.BalanceId;
 import su.efremov.wallet.domain.CurrencyEnum;
 import su.efremov.wallet.domain.Transaction;
 import su.efremov.wallet.domain.User;
@@ -53,20 +54,31 @@ public class WithdrawGrpcService extends WithdrawGrpc.WithdrawImplBase {
             final User user = userRepository.findById(userId)
                 .orElseThrow(() -> new InsufficientFundsException(String.format(USER_NOT_FOUND_ERROR_MSG, userId)));
 
-            final BigDecimal currentAmount = balanceRepository.findByIdUserIdAndIdCurrency(userId, currency)
-                .map(Balance::getAmount)
-                .orElse(BigDecimal.ZERO);
+            Balance balance = balanceRepository.findByIdUserIdAndIdCurrency(userId, currency)
+                .orElse(Balance.builder()
+                    .amount(BigDecimal.ZERO)
+                    .id(BalanceId.builder()
+                        .currency(currency)
+                        .userId(userId)
+                        .build())
+                    .build());
 
-            if (currentAmount.compareTo(amount) < 0) {
-                String msg = String.format(INSUFFICIENT_FUNDS_ERROR_MSG, userId, amount.toString(), currency, currentAmount.toString(), currency);
+            if (balance.getAmount().compareTo(amount) < 0) {
+                String msg = String.format(INSUFFICIENT_FUNDS_ERROR_MSG, userId, amount.toString(), currency, balance.getAmount().toString(), currency);
                 throw new InsufficientFundsException(msg);
             }
+
+            balance.setAmount(balance.getAmount().subtract(amount));
+
             transactionRepository.save(Transaction.builder()
                 .date(now)
                 .user(user)
                 .amount(amount.negate())
                 .currency(currency)
                 .build());
+
+            balanceRepository.save(balance);
+
             responseObserver.onNext(Empty.newBuilder().build());
             responseObserver.onCompleted();
         } catch (UnknownCurrencyException ex) {

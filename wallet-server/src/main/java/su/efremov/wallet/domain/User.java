@@ -8,14 +8,12 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
-import lombok.ToString;
 
 @Entity
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-@ToString(exclude = {"password"})
 @EqualsAndHashCode(of = "id")
 public class User {
 
@@ -24,7 +22,4 @@ public class User {
 
     private String username;
 
-    private String email;
-
-    private String password;
 }

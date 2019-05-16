@@ -22,14 +22,25 @@
             </column>
         </createTable>
     </changeSet>
+    <changeSet author="efserg" id="create-wallet-balance-table">
+        <createTable tableName="balance">
+            <column name="user_id" type="BIGINT">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="currency_code" type="VARCHAR(3)">
+                <constraints primaryKey="true"/>
+            </column>
+            <column name="amount" type="DECIMAL(10,2)">
+                <constraints nullable="false"/>
+            </column>
+        </createTable>
+    </changeSet>
     <changeSet author="efserg" id="create-user-table">
         <createTable tableName="user">
             <column name="id" type="BIGINT">
                 <constraints primaryKey="true"/>
             </column>
             <column name="username" type="VARCHAR(45)"/>
-            <column name="email" type="VARCHAR(45)"/>
-            <column name="password" type="VARCHAR(1024)"/>
         </createTable>
     </changeSet>
     <changeSet author="efserg" id="create-fk-transaction-user-id-index">
@@ -37,9 +48,20 @@
             <column name="user_id"/>
         </createIndex>
     </changeSet>
+    <changeSet author="efserg" id="create-fk-balance-user-id-index">
+        <createIndex indexName="fk_balance_user_idx" tableName="balance">
+            <column name="user_id"/>
+        </createIndex>
+    </changeSet>
     <changeSet author="efserg" id="create-fk-transaction-user-id-constraint">
         <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="transaction"
                                  constraintName="fk_transaction_user" deferrable="false" initiallyDeferred="false"
+                                 onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id"
+                                 referencedTableName="user" validate="true"/>
+    </changeSet>
+    <changeSet author="efserg" id="create-fk-balance-user-id-constraint">
+        <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="balance"
+                                 constraintName="fk_balance_user" deferrable="false" initiallyDeferred="false"
                                  onDelete="NO ACTION" onUpdate="NO ACTION" referencedColumnNames="id"
                                  referencedTableName="user" validate="true"/>
     </changeSet>
