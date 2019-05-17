@@ -53,6 +53,11 @@
             <column name="user_id"/>
         </createIndex>
     </changeSet>
+    <changeSet author="efserg" id="create-fk-balance-currency-index">
+        <createIndex indexName="fk_balance_currency_idx" tableName="balance">
+            <column name="currency"/>
+        </createIndex>
+    </changeSet>
     <changeSet author="efserg" id="create-fk-transaction-user-id-constraint">
         <addForeignKeyConstraint baseColumnNames="user_id" baseTableName="transaction"
                                  constraintName="fk_transaction_user" deferrable="false" initiallyDeferred="false"
