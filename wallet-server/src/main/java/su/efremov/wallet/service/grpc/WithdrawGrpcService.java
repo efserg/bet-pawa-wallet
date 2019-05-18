@@ -70,14 +70,14 @@ public class WithdrawGrpcService extends WithdrawGrpc.WithdrawImplBase {
 
             balance.setAmount(balance.getAmount().subtract(amount));
 
-            transactionRepository.save(Transaction.builder()
+            transactionRepository.saveAndFlush(Transaction.builder()
                 .date(now)
                 .user(user)
                 .amount(amount.negate())
                 .currency(currency)
                 .build());
 
-            balanceRepository.save(balance);
+            balanceRepository.saveAndFlush(balance);
 
             responseObserver.onNext(Empty.newBuilder().build());
             responseObserver.onCompleted();

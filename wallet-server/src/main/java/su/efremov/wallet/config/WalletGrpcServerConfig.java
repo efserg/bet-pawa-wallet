@@ -11,6 +11,6 @@ import io.grpc.ServerBuilder;
 public class WalletGrpcServerConfig implements GrpcServerConfigurer {
     @Override
     public void accept(ServerBuilder<?> serverBuilder) {
-        serverBuilder.executor(Executors.newFixedThreadPool(1));
+        serverBuilder.executor(Executors.newFixedThreadPool(4));
     }
 }

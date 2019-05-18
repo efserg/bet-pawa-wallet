@@ -48,7 +48,7 @@ public class DepositGrpcService extends DepositGrpc.DepositImplBase {
             synchronized (userId) {
                 final User user = userRepository.findById(userId)
                     .orElseGet(() -> userRepository.save(User.builder().id(userId).build()));
-                transactionRepository.save(Transaction.builder()
+                transactionRepository.saveAndFlush(Transaction.builder()
                     .date(now)
                     .user(user)
                     .amount(amount)
@@ -63,7 +63,7 @@ public class DepositGrpcService extends DepositGrpc.DepositImplBase {
                             .build())
                         .build());
                 balance.setAmount(balance.getAmount().add(amount));
-                balanceRepository.save(balance);
+                balanceRepository.saveAndFlush(balance);
             }
             responseObserver.onNext(Empty.newBuilder().build());
             responseObserver.onCompleted();
