@@ -1,4 +1,4 @@
-package su.efremov.wallet.service;
+package su.efremov.wallet.starter;
 
 import lombok.Getter;
 import lombok.ToString;
@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 @Slf4j
 @Getter
 @ToString
-public class WalletTestConfigService {
+public class WalletTestConfig {
 
     @Value("${users}")
     private Integer users;
@@ -22,6 +22,15 @@ public class WalletTestConfigService {
 
     @Value("${rounds_per_thread}")
     private Integer rounds;
+
+    @Value("start_integration_test")
+    private boolean startIntegrationTest;
+
+    @Value("start_performance_test")
+    private boolean startConcurrentTest;
+
+    @Value("user_id")
+    private Long userId;
 
     @EventListener(ApplicationReadyEvent.class)
     public void config() {

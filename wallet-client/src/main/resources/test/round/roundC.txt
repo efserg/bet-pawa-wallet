@@ -1,0 +1,8 @@
+Balance
+Deposit 100 USD
+Deposit 100 USD
+Withdraw 100 USD
+Deposit 100 USD
+Balance
+Withdraw 200 USD
+Balance
