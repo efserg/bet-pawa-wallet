@@ -24,5 +24,6 @@ public class BalanceId implements Serializable {
     private Long userId;
 
     @Enumerated(EnumType.STRING)
+    @Column(name = "currency_code")
     private CurrencyEnum currency;
 }

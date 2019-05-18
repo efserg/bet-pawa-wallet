@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.Immutable;
 
 @Entity(name = "balance")
-@Immutable
 @Data
 @AllArgsConstructor
 @NoArgsConstructor

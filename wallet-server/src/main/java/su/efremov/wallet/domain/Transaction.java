@@ -1,7 +1,10 @@
 package su.efremov.wallet.domain;
 
+import static javax.persistence.GenerationType.IDENTITY;
+
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
@@ -24,7 +27,7 @@ import lombok.NoArgsConstructor;
 public class Transaction {
 
     @Id
-    @GeneratedValue
+    @GeneratedValue(strategy = IDENTITY)
     private Long id;
 
     private LocalDateTime date;

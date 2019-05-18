@@ -54,8 +54,8 @@
         </createIndex>
     </changeSet>
     <changeSet author="efserg" id="create-fk-balance-currency-index">
-        <createIndex indexName="fk_balance_currency_idx" tableName="balance">
-            <column name="currency"/>
+        <createIndex indexName="fk_balance_currency_code_idx" tableName="balance">
+            <column name="currency_code"/>
         </createIndex>
     </changeSet>
     <changeSet author="efserg" id="create-fk-transaction-user-id-constraint">
@@ -73,11 +73,6 @@
     <changeSet author="efserg" id="add-autoincrement-for-transaction-id">
         <addAutoIncrement columnDataType="BIGINT" columnName="id" incrementBy="1" startWith="100"
                           tableName="transaction"/>
-    </changeSet>
-    <changeSet author="efserg" id="create-balance-view">
-        <createView replaceIfExists="true" viewName="balance">
-            SELECT user_id, currency, SUM(amount) as amount FROM transaction GROUP BY user_id, currency
-        </createView>
     </changeSet>
 
 </databaseChangeLog>
