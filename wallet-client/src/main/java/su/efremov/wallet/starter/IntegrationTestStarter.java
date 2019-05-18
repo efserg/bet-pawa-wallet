@@ -1,7 +1,6 @@
 package su.efremov.wallet.starter;
 
 import java.io.IOException;
-import java.util.List;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -35,9 +34,8 @@ public class IntegrationTestStarter {
 
         log.info("Integration test started");
 
-        final List<WalletAction> walletActions = parser.parse(resourceFile.getInputStream());
-
-        walletActions.forEach(walletAction -> actionPerformer.perform(walletAction, config.getUserId()));
+        parser.parse(resourceFile.getInputStream())
+            .forEach(walletAction -> actionPerformer.perform(walletAction, config.getUserId()));
 
     }
 

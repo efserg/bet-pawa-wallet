@@ -55,7 +55,6 @@ public class WalletActionPerformer {
             }
         }
 
-
     }
 
     private void withdraw(final WalletAction walletAction, final Long userId) {
