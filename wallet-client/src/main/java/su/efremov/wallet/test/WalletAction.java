@@ -1,4 +1,4 @@
-package su.efremov.wallet.starter;
+package su.efremov.wallet.test;
 
 import java.math.BigDecimal;
 import java.util.Map;
@@ -9,7 +9,7 @@ import su.efremov.bet.pawa.deposit.Currency;
 
 @Data
 @Builder
-class WalletAction {
+public class WalletAction {
     enum ActionType {WITHDRAW, DEPOSIT, BALANCE}
 
     private ActionType actionType;

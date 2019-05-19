@@ -1,13 +1,13 @@
-withdrawal 200 USD
+withdraw 200 USD
 deposit 100 USD
 balance
-withdrawal 200 USD
+withdraw 200 USD
 deposit 100 EUR
 balance
-withdrawal 200 USD
+withdraw 200 USD
 deposit 100 USD
 balance
-withdrawal 200 USD
+withdraw 200 USD
 balance
-withdrawal 200 USD
+withdraw 200 USD
 balance

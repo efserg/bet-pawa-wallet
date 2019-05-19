@@ -1,6 +1,7 @@
-package su.efremov.wallet.starter;
+package su.efremov.wallet.test.integration;
 
 import java.io.IOException;
+import java.util.Random;
 
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -9,6 +10,9 @@ import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
 import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
+import su.efremov.wallet.test.TestCaseParser;
+import su.efremov.wallet.test.WalletActionPerformer;
+import su.efremov.wallet.test.WalletTestConfig;
 
 @Service
 @RequiredArgsConstructor
@@ -32,10 +36,13 @@ public class IntegrationTestStarter {
             return;
         }
 
-        log.info("Integration test started");
+        final long userId = new Random().nextInt();
+
+        log.info("Integration test started with userId {}", userId);
 
         parser.parse(resourceFile.getInputStream())
-            .forEach(walletAction -> actionPerformer.perform(walletAction, config.getUserId()));
+            .getActions()
+            .forEach(walletAction -> actionPerformer.perform(walletAction, userId));
 
     }
 

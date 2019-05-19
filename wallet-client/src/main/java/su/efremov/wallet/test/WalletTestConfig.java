@@ -1,4 +1,4 @@
-package su.efremov.wallet.starter;
+package su.efremov.wallet.test;
 
 import lombok.Getter;
 import lombok.ToString;
@@ -23,14 +23,11 @@ public class WalletTestConfig {
     @Value("${rounds_per_thread}")
     private Integer rounds;
 
-    @Value("start_integration_test")
+    @Value("${start_integration_test}")
     private boolean startIntegrationTest;
 
-    @Value("start_performance_test")
+    @Value("${start_performance_test}")
     private boolean startConcurrentTest;
-
-    @Value("user_id")
-    private Long userId;
 
     @EventListener(ApplicationReadyEvent.class)
     public void config() {

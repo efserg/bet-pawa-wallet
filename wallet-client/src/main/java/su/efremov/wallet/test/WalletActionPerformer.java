@@ -1,4 +1,4 @@
-package su.efremov.wallet.starter;
+package su.efremov.wallet.test;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -32,7 +32,7 @@ public class WalletActionPerformer {
     public void perform(final WalletAction action, final Long userId) {
 
         try {
-            log.info("{} {} {}", action.getActionType(), action.getAmount(), action.getCurrency());
+            log.info("{} {} {} for user {}", action.getActionType(), action.getAmount(), action.getCurrency(), userId);
             switch (action.getActionType()) {
                 case BALANCE:
                     boolean isCorrectBalance = checkBalances(action.getCurrentBalances(), userId);

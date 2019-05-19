@@ -1,6 +1,6 @@
-package su.efremov.wallet.starter;
+package su.efremov.wallet.test;
 
-import static su.efremov.wallet.starter.WalletAction.ActionType.BALANCE;
+import static su.efremov.wallet.test.WalletAction.ActionType.BALANCE;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -26,7 +26,7 @@ public class TestCaseParser {
     private static final Map<Currency, BigDecimal> INITIAL_BALANCES = Stream.of(Currency.values())
         .collect(Collectors.toMap(Function.identity(), currency -> BigDecimal.ZERO));
 
-    public List<WalletAction> parse(InputStream inputStream) throws IOException {
+    public Round parse(InputStream inputStream) throws IOException {
 
         final List<WalletAction> walletActions = new ArrayList<>();
 
@@ -65,7 +65,7 @@ public class TestCaseParser {
                     .build());
             }
         }
-        return walletActions;
+        return Round.builder().actions(walletActions).build();
     }
 
 }

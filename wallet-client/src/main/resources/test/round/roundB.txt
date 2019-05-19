@@ -1,5 +1,5 @@
-Withdraw 100 GBP
-Deposit 300 GPB
-Withdraw 100 GBP
-Withdraw 100 GBP
-Withdraw 100 GBP
+Withdraw 100 GBR
+Deposit 300 GBR
+Withdraw 100 GBR
+Withdraw 100 GBR
+Withdraw 100 GBR
