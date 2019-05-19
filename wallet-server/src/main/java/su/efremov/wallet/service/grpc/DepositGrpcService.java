@@ -11,7 +11,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.transaction.annotation.Transactional;
 import net.devh.boot.grpc.server.service.GrpcService;
 import com.google.protobuf.Empty;
-
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import su.efremov.bet.pawa.deposit.AddFundsRequest;
@@ -45,26 +44,26 @@ public class DepositGrpcService extends DepositGrpc.DepositImplBase {
             final Long userId = request.getUserId();
             final CurrencyEnum currency = fromGrpc(request.getCurrency());
             final LocalDateTime now = LocalDateTime.now(UTC);
-            synchronized (userId) {
-                final User user = userRepository.findById(userId)
-                    .orElseGet(() -> userRepository.save(User.builder().id(userId).build()));
-                transactionRepository.saveAndFlush(Transaction.builder()
-                    .date(now)
-                    .user(user)
-                    .amount(amount)
-                    .currency(currency)
+
+            final User user = userRepository.findById(userId)
+                .orElseGet(() -> userRepository.save(User.builder().id(userId).build()));
+            transactionRepository.saveAndFlush(Transaction.builder()
+                .date(now)
+                .user(user)
+                .amount(amount)
+                .currency(currency)
+                .build());
+            Balance balance = balanceRepository.findByIdUserIdAndIdCurrency(userId, currency)
+                .orElse(Balance.builder()
+                    .amount(BigDecimal.ZERO)
+                    .id(BalanceId.builder()
+                        .currency(currency)
+                        .userId(userId)
+                        .build())
                     .build());
-                Balance balance = balanceRepository.findByIdUserIdAndIdCurrency(userId, currency)
-                    .orElse(Balance.builder()
-                        .amount(BigDecimal.ZERO)
-                        .id(BalanceId.builder()
-                            .currency(currency)
-                            .userId(userId)
-                            .build())
-                        .build());
-                balance.setAmount(balance.getAmount().add(amount));
-                balanceRepository.saveAndFlush(balance);
-            }
+            balance.setAmount(balance.getAmount().add(amount));
+            balanceRepository.saveAndFlush(balance);
+
             responseObserver.onNext(Empty.newBuilder().build());
             responseObserver.onCompleted();
         } catch (UnknownCurrencyException ex) {

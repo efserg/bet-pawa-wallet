@@ -25,14 +25,15 @@ public class PerformanceInterceptor implements ServerInterceptor {
         return new ForwardingServerCallListener.SimpleForwardingServerCallListener<ReqT>(listener) {
             @Override
             public void onComplete() {
-                super.onComplete();
                 requestCounter.incrementAndGet();
+                super.onComplete();
             }
         };
     }
 
     @Scheduled(fixedDelay = 1000)
     public void logRequestCount() {
-        log.info("Current rps = {}", requestCounter.getAndUpdate((i) -> 0));
+        int count = requestCounter.getAndUpdate((i) -> 0);
+        if (count > 0) log.info("Current rps = {}", count);
     }
 }
