@@ -44,6 +44,10 @@ public class IntegrationTestStarter {
             .getActions()
             .forEach(walletAction -> actionPerformer.perform(walletAction, userId));
 
+        log.info("Integration test done");
+
+        System.exit(0);
+
     }
 
 

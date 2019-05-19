@@ -6,7 +6,6 @@ import java.util.List;
 import java.util.Random;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
@@ -74,8 +73,6 @@ public class ConcurrentTestStarter {
         final ExecutorService executor = Executors.newFixedThreadPool(threadCount);
 
         executor.invokeAll(walletClients);
-
-        executor.awaitTermination(Integer.MAX_VALUE, TimeUnit.SECONDS);
 
         log.info("Concurrent test done");
 
