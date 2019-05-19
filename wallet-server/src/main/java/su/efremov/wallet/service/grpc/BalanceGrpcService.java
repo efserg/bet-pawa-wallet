@@ -1,45 +1,27 @@
 package su.efremov.wallet.service.grpc;
 
-import static java.util.stream.Collectors.toSet;
-
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.transaction.annotation.Transactional;
 import net.devh.boot.grpc.server.service.GrpcService;
-
 import io.grpc.Status;
 import io.grpc.stub.StreamObserver;
 import su.efremov.bet.pawa.balance.BalanceGrpc;
 import su.efremov.bet.pawa.balance.BalanceRequest;
 import su.efremov.bet.pawa.balance.BalanceResponse;
-import su.efremov.bet.pawa.balance.CurrencyBalance;
-import su.efremov.bet.pawa.deposit.Currency;
-import su.efremov.wallet.repository.BalanceRepository;
+import su.efremov.wallet.service.WalletService;
 
 @GrpcService
 @RequiredArgsConstructor
 @Slf4j
 public class BalanceGrpcService extends BalanceGrpc.BalanceImplBase {
 
-    private final BalanceRepository balanceRepository;
+    private final WalletService walletService;
 
     @Override
-    @Transactional(readOnly = true)
     public void balance(BalanceRequest request, StreamObserver<BalanceResponse> responseObserver) {
 
         try {
-            Iterable<CurrencyBalance> balances = balanceRepository.findByIdUserId(request.getUserId()).stream()
-                .map(balance -> CurrencyBalance.newBuilder()
-                    .setCurrency(Currency.valueOf(balance.getId().getCurrency().name()))
-                    .setAmount(balance.getAmount().toString())
-                    .build())
-                .collect(toSet());
-
-            BalanceResponse balance = BalanceResponse.newBuilder()
-                .addAllBalance(balances)
-                .build();
-
-            responseObserver.onNext(balance);
+            responseObserver.onNext(walletService.receiveBalance(request.getUserId()));
             responseObserver.onCompleted();
         } catch (Exception ex) {
             log.error("Error during get wallet balance", ex);
@@ -50,5 +32,7 @@ public class BalanceGrpcService extends BalanceGrpc.BalanceImplBase {
                 .asRuntimeException());
         }
     }
+
+
 
 }
