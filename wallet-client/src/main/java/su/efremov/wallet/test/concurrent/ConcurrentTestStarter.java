@@ -43,7 +43,7 @@ public class ConcurrentTestStarter {
             return;
         }
 
-        log.info("Concurrent test started");
+        log.info("Concurrent test started with params: {}", config);
 
         final List<Round> rounds = Stream.of(roundFiles.getResources(CLASSPATH_TEST_ROUND_ROUND))
             .map(resource -> {
