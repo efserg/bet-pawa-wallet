@@ -3,13 +3,13 @@
 Project for emulate user electronic wallets for different currency.
 
 
-##Requirements
+## Requirements
 * The task consists of a wallet server and a wallet client. 
 * The wallet server will keep track of a users monetary balance in the system. 
 * There should be separate balance for different currencies.
 * The client will emulate users depositing and withdrawing funds.
 
-##Technologies
+## Technologies
 * Java 8 
 * Spring 5.x
 * gRPC
@@ -20,13 +20,13 @@ Project for emulate user electronic wallets for different currency.
 * Spring Boot 2.1
 * Liquibase
 
-##Database schema
+## Database schema
 ![betPawa wallet DB schema](bpwallet-db-schema.png)
 
-##Build application
+## Build application
 Run `gradle build` inside the project root directory
 
-###Run wallet server
+### Run wallet server
 Type `cd wallet-server` in the project root directory
 * create MySql database with name `bpwallet`
 * create DB user `bpwalletuser` with password `pwd` and read-write privileges
@@ -56,7 +56,7 @@ For example:
 
 `java -jar build/libs/wallet-client.jar --users=10 --start_integration_test=true --start_performance_test=false`
 
-##Key features
+## Key features
 * use spring-boot-gradle-plugin
 * gRPC model store in separate module, entities generate after building
 * use gRPC interceptors for logging and measuring performance
