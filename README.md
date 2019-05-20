@@ -33,12 +33,13 @@ Type `cd wallet-server` in the project root directory
 
 OR
 
-* change following parameters at `src/maim/resurces/application.properties` file
+* change following parameters at `src/main/resources/application.properties` file
     * spring.datasource.url
     * spring.datasource.username
     * spring.datasource.password
     * spring.datasource.driver-class-name
 * if it needed you can set `grpc.server.threads.number` parameter to change the number of threads in the gRPC requests pool
+
 Type `gradle bootRun` to run server
 
 ### Run wallet client
@@ -49,7 +50,7 @@ Type `java -jar build/libs/wallet-client.jar`.
 You can use following CLI params:
 
 | Name | Description | Default value |
-|:-----|:------------|---------------|
+|:-----|:------------|:--------------|
 |users |Concurrent users | 100 |  
 |concurrent_threads_per_user |Threads per each users | 3 |
 |rounds_per_thread |Rounds, each thread executes | 10 |
@@ -77,4 +78,20 @@ Also you can add, change or remove rounds for concurrent test. Just add, remove 
 * use gRPC interceptors for logging and measuring performance
 * store all users transactions 
 * use text files for create test cases and test rounds
+* opportunity to check balance during testing (application can understand what balance must be after each test request) 
 * REST controllers was implemented for user transactions
+
+## Performance
+Use following parameters for client application:
+* users=100
+* concurrent_threads_per_user=3
+* rounds_per_thread=10
+
+I got such results (depends on `grpc.server.threads.number` parameter value)
+
+|`grpc.server.threads.number` value|request per sec|
+|:-------------------------------|:--------------|
+| 1 | 100-250 |
+| 2 | 300-350 |
+| 4 | 600-700 |
+| 6 | 600-700 |
