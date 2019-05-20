@@ -30,7 +30,9 @@ Run `gradle build` inside the project root directory
 Type `cd wallet-server` in the project root directory
 * create MySql database with name `bpwallet`
 * create DB user `bpwalletuser` with password `pwd` and read-write privileges
+
 OR
+
 * change following parameters at `src/maim/resurces/application.properties` file
     * spring.datasource.url
     * spring.datasource.username
@@ -40,9 +42,11 @@ OR
 Type `gradle bootRun` to run server
 
 ### Run wallet client
-Type `cd wallet-client` in the project root directory
-Type `java -jar build/libs/wallet-client.jar`
-You can use following CLI params
+Type `cd wallet-client` in the project root directory.
+
+Type `java -jar build/libs/wallet-client.jar`.
+
+You can use following CLI params:
 
 | Name | Description | Default value |
 |:-----|:------------|---------------|
@@ -56,8 +60,21 @@ For example:
 
 `java -jar build/libs/wallet-client.jar --users=10 --start_integration_test=true --start_performance_test=false`
 
+You can change integration test scenario in `wallet-client/src/main/resources/test/cases/test-case.txt` file. Line format is:
+
+`command` `amount` `currence`
+
+where
+* `command` is one of `deposit`, `withdraw`, `balance`
+* `amount` is transaction amount
+* `currency` is currency code: `EUR`, `USD` or `GBR`
+
+Also you can add, change or remove rounds for concurrent test. Just add, remove or change files in `wallet-client/src/main/resources/test/round` folder. Use file name pattern `round*.*`
+
 ## Key features
 * use spring-boot-gradle-plugin
 * gRPC model store in separate module, entities generate after building
 * use gRPC interceptors for logging and measuring performance
 * store all users transactions 
+* use text files for create test cases and test rounds
+* REST controllers was implemented for user transactions
